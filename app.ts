@@ -67,7 +67,7 @@ function renderBricks(ctx: CanvasRenderingContext2D) {
     }
 }
 
-function collisionDetection() {
+function brickCollisionDetection() {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
             const brick = bricks[r][c];
@@ -147,7 +147,7 @@ function draw(intervalID: number) {
     
     moveBall(intervalID);
     movePaddle();
-    collisionDetection();
+    brickCollisionDetection();
 }
 
 function keydDownHandler(e: KeyboardEvent) {
