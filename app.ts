@@ -11,6 +11,8 @@ const catppuccin = [
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
+let score = 0;
+
 let ballX, ballY;
 let ballSpeedX = 2;
 let ballSpeedY = -2;
@@ -116,12 +118,16 @@ function movePaddle() {
 }
 
 function init() {
-    canvas.width = 1280;
-    canvas.height = 720;
     ballX = canvas.width / 2;
     ballY = canvas.height - 30;
     paddleX = (canvas.width - paddleWidth) / 2;
     initBricks();
+}
+
+function renderScore(ctx: CanvasRenderingContext2D) {
+    ctx.font = "16px Ubuntu";
+    ctx.fillStyle = catppuccin[7];
+    ctx.fillText(`Score: ${score}`, 8, 20)
 }
 
 function draw(intervalID: number) {
@@ -134,6 +140,7 @@ function draw(intervalID: number) {
     renderBall(ctx);
     renderPaddle(ctx);
     renderBricks(ctx);
+    renderScore(ctx);
     
     moveBall(intervalID);
     movePaddle();
