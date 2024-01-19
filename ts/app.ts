@@ -129,7 +129,7 @@ function paddleMove() {
 
 function paddleCollisionDetection() {
     if (ballY + ballRadius >= paddleY && ballX + ballRadius >= paddleX && 
-            ballX <= paddleX + paddleWidth && Math.sign(ballSpeedY) != -1) {
+            ballX <= paddleX + paddleWidth && Math.sign(ballSpeedY) !== -1) {
         ballSpeedY = -ballSpeedY;
     }
 }
