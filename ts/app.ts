@@ -22,6 +22,7 @@ const ballRadius = 10;
 let paddleX;
 const paddleWidth = 75;
 const paddleHeight = 10;
+const paddleY = canvas.height - paddleHeight;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -99,14 +100,14 @@ function ballMove(intervalID: number) {
     }
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
-    } else if (ballY - 2 * ballRadius > canvas.height) {
+    } else if (ballY + ballRadius > canvas.height) {
         gameOver(intervalID);
     }
 }
 
 function paddleRender(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
-    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
     ctx.fillStyle = catppuccin[3];
     ctx.fill();
     ctx.closePath();
@@ -117,6 +118,13 @@ function paddleMove() {
         paddleX += 7;
     } else if (leftPressed && paddleX - 7 >= 0) {
         paddleX -= 7;
+    }
+}
+
+function paddleCollisionDetection() {
+    if (ballY + ballRadius >= paddleY && ballX + ballRadius >= paddleX && 
+            ballX <= paddleX + paddleWidth && Math.sign(ballSpeedY) != -1) {
+        ballSpeedY = -ballSpeedY;
     }
 }
 
@@ -147,6 +155,7 @@ function draw(intervalID: number) {
 
     ballMove(intervalID);
     paddleMove();
+    paddleCollisionDetection();
     brickCollisionDetection();
 }
 
