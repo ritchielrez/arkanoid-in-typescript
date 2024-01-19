@@ -59,7 +59,7 @@ function brickInit() {
 function brickRender(ctx: CanvasRenderingContext2D | null) {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
-            if (bricks[r][c].status == 1) {
+            if (bricks[r][c].status === 1) {
                 const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
                 const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
                 bricks[r][c].x = brickX;
@@ -171,17 +171,17 @@ function draw(intervalID: number) {
 }
 
 function keydDownHandler(e: KeyboardEvent) {
-    if (e.key == "Right" || e.key == "ArrowRight") {
+    if (e.key === "Right" || e.key === "ArrowRight") {
         rightPressed = true;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
         leftPressed = true;
     }
 }
 
 function keyUpHandler(e: KeyboardEvent) {
-    if (e.key == "Right" || e.key == "ArrowRight") {
+    if (e.key === "Right" || e.key === "ArrowRight") {
         rightPressed = false;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
         leftPressed = false;
     }
 }
