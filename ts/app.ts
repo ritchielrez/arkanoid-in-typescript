@@ -13,13 +13,13 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
 let score = 0;
 
-let ballX, ballY;
+let ballX: number, ballY: number;
 let ballSpeedX = 2;
 let ballSpeedY = -2;
 
 const ballRadius = 10;
 
-let paddleX;
+let paddleX: number;
 const paddleWidth = 75;
 const paddleHeight = 10;
 const paddleY = canvas.height - paddleHeight;
@@ -35,7 +35,13 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
-const bricks = [];
+interface Brick {
+    x: number;
+    y: number;
+    status: number;
+}
+
+const bricks: Brick[][]= [];
 
 function getRandom(min: number, max: number) : number {
     return Math.floor(Math.random() * (max - min) + min);
@@ -50,7 +56,7 @@ function brickInit() {
     }
 }
 
-function brickRender(ctx: CanvasRenderingContext2D) {
+function brickRender(ctx: CanvasRenderingContext2D | null) {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
             if (bricks[r][c].status == 1) {
@@ -58,11 +64,11 @@ function brickRender(ctx: CanvasRenderingContext2D) {
                 const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
                 bricks[r][c].x = brickX;
                 bricks[r][c].y = brickY;
-                ctx.beginPath();
-                ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = catppuccin[2];
-                ctx.fill();
-                ctx.closePath();
+                ctx!.beginPath();
+                ctx!.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx!.fillStyle = catppuccin[2];
+                ctx!.fill();
+                ctx!.closePath();
             }
         }
     }
@@ -83,12 +89,12 @@ function brickCollisionDetection() {
     }
 }
 
-function ballRender(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = catppuccin[1];
-    ctx.fill();
-    ctx.closePath();
+function ballRender(ctx: CanvasRenderingContext2D | null) {
+    ctx!.beginPath();
+    ctx!.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+    ctx!.fillStyle = catppuccin[1];
+    ctx!.fill();
+    ctx!.closePath();
 }
 
 function ballMove(intervalID: number) {
@@ -105,12 +111,12 @@ function ballMove(intervalID: number) {
     }
 }
 
-function paddleRender(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    ctx.fillStyle = catppuccin[3];
-    ctx.fill();
-    ctx.closePath();
+function paddleRender(ctx: CanvasRenderingContext2D | null) {
+    ctx!.beginPath();
+    ctx!.rect(paddleX, paddleY, paddleWidth, paddleHeight);
+    ctx!.fillStyle = catppuccin[3];
+    ctx!.fill();
+    ctx!.closePath();
 }
 
 function paddleMove() {
@@ -135,10 +141,10 @@ function init() {
     brickInit();
 }
 
-function scoreRender(ctx: CanvasRenderingContext2D) {
-    ctx.font = "16px Ubuntu";
-    ctx.fillStyle = catppuccin[7];
-    ctx.fillText(`Score: ${score}`, 8, 20)
+function scoreRender(ctx: CanvasRenderingContext2D | null) {
+    ctx!.font = "16px Ubuntu";
+    ctx!.fillStyle = catppuccin[7];
+    ctx!.fillText(`Score: ${score}`, 8, 20)
 }
 
 function draw(intervalID: number) {
@@ -146,8 +152,13 @@ function draw(intervalID: number) {
         console.error("Canvas context is not supported.");
         return;
     }
+
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    if(ctx !== null) {
+        console.error("Canvas context is null.");
+    }
+    ctx!.clearRect(0, 0, canvas.width, canvas.height)
+
     ballRender(ctx);
     paddleRender(ctx);
     brickRender(ctx);
