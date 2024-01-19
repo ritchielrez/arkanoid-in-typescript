@@ -25,8 +25,8 @@ let rightPressed = false;
 let leftPressed = false;
 
 const brickRowCount = 3;
-const brickColumnCount = 9;
-const brickWidth = 75;
+const brickColumnCount = 11;
+const brickWidth = 100;
 const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
@@ -70,9 +70,8 @@ function collisionDetection() {
         for (let c = 0; c < brickColumnCount; ++c) {
             const brick = bricks[r][c];
 
-            if (ballX > brick.x && ballX < brick.x + brickWidth && ballY > brick.y && ballY < brick.y + brickHeight) {
-                ballSpeedY = -ballSpeedY;
-                brick.status = 0;
+            if (ballY - ballRadius <= brick.y + brickHeight && ballY + ballRadius >= brick.y) {
+                ballSpeedY = -ballSpeedY
             }
         }
     }
@@ -117,8 +116,8 @@ function movePaddle() {
 }
 
 function init() {
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = 1280;
+    canvas.height = 720;
     ballX = canvas.width / 2;
     ballY = canvas.height - 30;
     paddleX = (canvas.width - paddleWidth) / 2;
