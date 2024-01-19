@@ -40,7 +40,7 @@ function getRandom(min: number, max: number) : number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function initBricks() {
+function brickInit() {
     for (let r = 0; r < brickRowCount; ++r) {
         bricks[r] = [];
         for (let c = 0; c < brickColumnCount; ++c) {
@@ -49,7 +49,7 @@ function initBricks() {
     }
 }
 
-function renderBricks(ctx: CanvasRenderingContext2D) {
+function brickRender(ctx: CanvasRenderingContext2D) {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
             if (bricks[r][c].status == 1) {
@@ -82,7 +82,7 @@ function brickCollisionDetection() {
     }
 }
 
-function renderBall(ctx: CanvasRenderingContext2D) {
+function ballRender(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
     ctx.fillStyle = catppuccin[1];
@@ -90,7 +90,7 @@ function renderBall(ctx: CanvasRenderingContext2D) {
     ctx.closePath();
 }
 
-function moveBall(intervalID: number) {
+function ballMove(intervalID: number) {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
@@ -104,7 +104,7 @@ function moveBall(intervalID: number) {
     }
 }
 
-function renderPaddle(ctx: CanvasRenderingContext2D) {
+function paddleRender(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = catppuccin[3];
@@ -112,7 +112,7 @@ function renderPaddle(ctx: CanvasRenderingContext2D) {
     ctx.closePath();
 }
 
-function movePaddle() {
+function paddleMove() {
     if (rightPressed && paddleX + paddleWidth + 7 <= canvas.width) {
         paddleX += 7;
     } else if (leftPressed && paddleX - 7 >= 0) {
@@ -124,10 +124,10 @@ function init() {
     ballX = canvas.width / 2;
     ballY = canvas.height - 30;
     paddleX = (canvas.width - paddleWidth) / 2;
-    initBricks();
+    brickInit();
 }
 
-function renderScore(ctx: CanvasRenderingContext2D) {
+function scoreRender(ctx: CanvasRenderingContext2D) {
     ctx.font = "16px Ubuntu";
     ctx.fillStyle = catppuccin[7];
     ctx.fillText(`Score: ${score}`, 8, 20)
@@ -140,13 +140,13 @@ function draw(intervalID: number) {
     }
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    renderBall(ctx);
-    renderPaddle(ctx);
-    renderBricks(ctx);
-    renderScore(ctx);
-    
-    moveBall(intervalID);
-    movePaddle();
+    ballRender(ctx);
+    paddleRender(ctx);
+    brickRender(ctx);
+    scoreRender(ctx);
+
+    ballMove(intervalID);
+    paddleMove();
     brickCollisionDetection();
 }
 
