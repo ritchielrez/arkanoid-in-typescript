@@ -74,6 +74,7 @@ function collisionDetection() {
 
             if (ballY - ballRadius <= brick.y + brickHeight && ballY + ballRadius >= brick.y) {
                 ballSpeedY = -ballSpeedY
+                brick.status = 0;
             }
         }
     }
