@@ -13,11 +13,11 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
 let score = 0;
 
-let intervalID = 0;
+let animationID = 0;
 
 let ballX: number, ballY: number;
-let ballSpeedX = 2;
-let ballSpeedY = -2;
+let ballSpeedX = 5;
+let ballSpeedY = -5;
 
 const ballRadius = 10;
 
@@ -157,14 +157,14 @@ function scoreRender(ctx: CanvasRenderingContext2D | null) {
 function draw() {
     if (!canvas.getContext) {
         console.error("Canvas context is not supported.");
-        clearInterval(intervalID);
+        cancelAnimationFrame(animationID);
         return;
     }
 
     const ctx = canvas.getContext("2d");
     if(ctx === null) {
         console.error("Canvas context is null.");
-        clearInterval(intervalID);
+        cancelAnimationFrame(animationID);
         return;
     }
     ctx!.clearRect(0, 0, canvas.width, canvas.height)
@@ -178,6 +178,8 @@ function draw() {
     paddleMove();
     paddleCollisionDetection();
     brickCollisionDetection();
+
+    animationID = requestAnimationFrame(draw);
 }
 
 function keydDownHandler(e: KeyboardEvent) {
@@ -208,15 +210,12 @@ function gameWon() {
 
 function gameReload() {
     document.location.reload();
-    clearInterval(intervalID);
 }
 
 // Initialize
 init();
 
-window.onload = () => {
-    intervalID = setInterval(draw, 10);
-};
+window.onload = draw;
 
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
