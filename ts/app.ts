@@ -101,7 +101,7 @@ function ballMove(intervalID: number) {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
-    if (ballX + ballSpeedX <= 0 || ballX + ballRadius + ballSpeedX > canvas.width) {
+    if (ballX + ballSpeedX <= 0 || ballX + ballRadius + ballSpeedX >= canvas.width) {
         ballSpeedX = -ballSpeedX;
     }
     if (ballY + ballSpeedY <= 0) {
