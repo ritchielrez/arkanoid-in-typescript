@@ -13,6 +13,8 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
 let score = 0;
 
+let intervalID = 0;
+
 let ballX: number, ballY: number;
 let ballSpeedX = 2;
 let ballSpeedY = -2;
@@ -98,7 +100,7 @@ function ballRender(ctx: CanvasRenderingContext2D | null) {
     ctx!.closePath();
 }
 
-function ballMove(intervalID: number) {
+function ballMove() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
@@ -108,7 +110,7 @@ function ballMove(intervalID: number) {
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
     } else if (ballY + ballRadius >= canvas.height) {
-        gameOver(intervalID);
+        gameOver();
     }
 }
 
@@ -148,7 +150,7 @@ function scoreRender(ctx: CanvasRenderingContext2D | null) {
     ctx!.fillText(`Score: ${score}`, 8, 20)
 }
 
-function draw(intervalID: number) {
+function draw() {
     if (!canvas.getContext) {
         console.error("Canvas context is not supported.");
         clearInterval(intervalID);
@@ -168,7 +170,7 @@ function draw(intervalID: number) {
     brickRender(ctx);
     scoreRender(ctx);
 
-    ballMove(intervalID);
+    ballMove();
     paddleMove();
     paddleCollisionDetection();
     brickCollisionDetection();
@@ -190,7 +192,7 @@ function keyUpHandler(e: KeyboardEvent) {
     }
 }
 
-function gameOver(intervalID: number) {
+function gameOver() {
     alert("Game Over!");
     document.location.reload();
     clearInterval(intervalID);
@@ -199,12 +201,8 @@ function gameOver(intervalID: number) {
 // Initialize
 init();
 
-let intervalID = 0;
-
 window.onload = () => {
-    intervalID = setInterval(() => {
-        draw(intervalID);
-    }, 10);
+    intervalID = setInterval(draw, 10);
 };
 
 document.addEventListener("keydown", keydDownHandler, false);
