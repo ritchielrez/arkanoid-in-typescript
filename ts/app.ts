@@ -197,6 +197,11 @@ function gameOver() {
     gameReload();
 }
 
+function gameWon() {
+    alert("You won!!");
+    gameReload();
+}
+
 function gameReload() {
     document.location.reload();
     clearInterval(intervalID);
