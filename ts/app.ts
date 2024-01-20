@@ -106,7 +106,7 @@ function ballMove(intervalID: number) {
     }
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
-    } else if (ballY + ballRadius > canvas.height) {
+    } else if (ballY + ballRadius >= canvas.height) {
         gameOver(intervalID);
     }
 }
