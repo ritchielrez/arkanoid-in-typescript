@@ -154,7 +154,7 @@ function draw(intervalID: number) {
     }
 
     const ctx = canvas.getContext("2d");
-    if(ctx !== null) {
+    if(ctx === null) {
         console.error("Canvas context is null.");
     }
     ctx!.clearRect(0, 0, canvas.width, canvas.height)
