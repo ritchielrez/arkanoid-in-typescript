@@ -150,12 +150,15 @@ function scoreRender(ctx: CanvasRenderingContext2D | null) {
 function draw(intervalID: number) {
     if (!canvas.getContext) {
         console.error("Canvas context is not supported.");
+        clearInterval(intervalID);
         return;
     }
 
     const ctx = canvas.getContext("2d");
     if(ctx === null) {
         console.error("Canvas context is null.");
+        clearInterval(intervalID);
+        return;
     }
     ctx!.clearRect(0, 0, canvas.width, canvas.height)
 
