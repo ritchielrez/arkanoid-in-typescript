@@ -194,6 +194,10 @@ function keyUpHandler(e: KeyboardEvent) {
 
 function gameOver() {
     alert("Game Over!");
+    gameReload();
+}
+
+function gameReload() {
     document.location.reload();
     clearInterval(intervalID);
 }
