@@ -11,6 +11,8 @@ const catppuccin = [
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
+let isGameOver = false;
+
 let score = 0;
 
 let animationID = 0;
