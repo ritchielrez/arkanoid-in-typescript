@@ -102,6 +102,10 @@ function ballRender(ctx: CanvasRenderingContext2D | null) {
     ctx!.fillStyle = catppuccin[1];
     ctx!.fill();
     ctx!.closePath();
+
+    if (isGameOver === true) {
+        gameOver();
+    }
 }
 
 function ballMove() {
@@ -113,8 +117,9 @@ function ballMove() {
     }
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
-    } else if (ballY + ballRadius >= canvas.height) {
-        gameOver();
+    } else if (ballY + ballRadius > canvas.height) {
+        ballY += ballSpeedY;
+        isGameOver = true;
     }
 }
 
