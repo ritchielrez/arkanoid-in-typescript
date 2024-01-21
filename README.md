@@ -1,5 +1,5 @@
 # typescript-html-canvas 
-### A game made using HTML5 canvas and Typescript 
+### A 2D breakout game made using HTML5 canvas and Typescript 
 #### WARNING!! This game is right now in an expermental phase
 
 This is nothing special. This is just me trying to learn how HTML5 canvas and Typescript works. I
