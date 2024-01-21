@@ -2,12 +2,12 @@
 ### A 2D breakout game made using HTML5 canvas and Typescript 
 #### WARNING!! This game is right now in an expermental phase
 
-This is nothing special. This is just me trying to learn how HTML5 canvas and Typescript works. I
+This is an expermental project for me trying to learn how HTML5 canvas and Typescript works. I
 know Typescript is not used for game development, but I just wanted to learn by doing something that
 I enjoy more than building websites. Go to https://ritchielrez.github.io/typescript-html-canvas/ to
-try it out.
+try this game out.
 
-Here are the instructions for you if you want to build from source:
+Here are the instructions for you if you want to build it from source:
 
 **Prerequisites:**
 
