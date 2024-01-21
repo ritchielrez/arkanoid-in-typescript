@@ -18,10 +18,11 @@ Here are the instructions for you if you want to build from source:
 **Commands:**
 
 ```bash
-npm install -g typescript http-server
+npm install -g http-server
 git clone https://github.com/ritchielrez/typescript-html-canvas
 cd typescript-html-canvas
-tsc
+npm install
+npm run build
 http-server -p 8080
 ```
 
