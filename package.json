@@ -1,7 +1,7 @@
 {
   "name": "typescript-html-canvas",
   "version": "0.0.1",
-  "description": "A game made using HTML5 canvas and Typescript",
+  "description": "A 2D breakout game made using HTML5 canvas and Typescript ",
   "main": "ts/app.ts",
   "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
