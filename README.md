@@ -25,4 +25,4 @@ tsc
 http-server -p 8080
 ```
 
-Then open up your browser and go to `localhost:8080` to play the game 😃
+Then open up your browser and go to `localhost:8080` to playtest the game 😃
