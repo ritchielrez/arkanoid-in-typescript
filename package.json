@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/ritchielrez/typescript-html-canvas/issues"
   },
-  "homepage": "https://github.com/ritchielrez/typescript-html-canvas#readme"
+  "homepage": "https://github.com/ritchielrez/typescript-html-canvas#readme",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
 }
