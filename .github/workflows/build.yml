@@ -24,10 +24,14 @@ jobs:
       - name: Build TypeScript
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        run: |
-          mkdir public
-          mv *.html public/
-          mv js/ public/js/
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4
