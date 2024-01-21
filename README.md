@@ -1,5 +1,6 @@
 # typescript-html-canvas 
 ### A game made using HTML5 canvas and Typescript 
+#### WARNING!! This game is right now in an expermental phase
 
 This is nothing special. This is just me trying to learn how HTML5 canvas and Typescript works. I
 know Typescript is not used for game development, but I just wanted to learn by doing something that
