@@ -12,6 +12,7 @@ const catppuccin = [
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const winScreen = document.getElementById("win-screen")
 const stopScreen = document.getElementById("stop-screen")
+const scoreElement = document.getElementById("score") as HTMLSpanElement;
 
 let isGameRunning = true;
 
