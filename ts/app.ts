@@ -85,8 +85,8 @@ function brickCollisionDetection() {
         for (let c = 0; c < brickColumnCount; ++c) {
             const brick = bricks[r][c];
 
-            if (brick.status == 1 &&  ballY - ballRadius <= brick.y + brickHeight && 
-                    ballY + ballRadius >= brick.y && ballX + ballRadius >= brick.x && 
+            if (brick.status === 1 && ballY - ballRadius <= brick.y + brickHeight &&
+                    ballY + ballRadius >= brick.y && ballX + ballRadius >= brick.x &&
                     ballX <= brick.x + brickWidth) {
                 ballSpeedY = -ballSpeedY
                 brick.status = 0;
