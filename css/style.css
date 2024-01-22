@@ -16,6 +16,9 @@ body {
     border: 0;
     font-family: "RecursiveRegular", serif;
 }
+#score-counter {
+    margin-top: 50px;
+}
 #canvas-container {
     display: flex;
     align-items: center;
