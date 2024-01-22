@@ -10,6 +10,8 @@ const catppuccin = [
 ];
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+const winScreen = document.getElementById("win-screen")
+const stopScreen = document.getElementById("stop-screen")
 
 let isGameRunning = true;
 
@@ -209,18 +211,32 @@ function keyUpHandler(e: KeyboardEvent) {
     }
 }
 
+function toggleScreen(element: HTMLElement | null, toggle: boolean) {
+    isGameRunning = false;
+
+    if (element === null) {
+        console.error("HTMLElement provided to toggleScreen() is null");
+        return;
+    }
+
+    let display: string;
+
+    if (toggle === true) {
+        display = "block";
+    } else {
+        display = "none";
+    }
+
+    ctx!.clearRect(0, 0, canvas.width, canvas.height);
+    element!.style.display = display;
+}
+
 function gameOver() {
-    alert("Game Over!");
-    gameReload();
+    toggleScreen(stopScreen, true);
 }
 
 function gameWon() {
-    alert("You won!!");
-    gameReload();
-}
-
-function gameReload() {
-    document.location.reload();
+    toggleScreen(winScreen, true);
 }
 
 // Initialize
