@@ -135,7 +135,7 @@ function paddleMove() {
 }
 
 function paddleCollisionDetection() {
-    if (ballY + ballRadius >= paddleY && ballX + ballRadius >= paddleX && 
+    if (ballY + ballRadius >= paddleY && ballX + ballRadius >= paddleX &&
             ballX - ballRadius <= paddleX + paddleWidth && Math.sign(ballSpeedY) !== -1) {
         ballSpeedY = -ballSpeedY;
     }
@@ -168,6 +168,7 @@ function draw() {
     paddleMove();
     paddleCollisionDetection();
     brickCollisionDetection();
+}
 
 function animate() {
     if (isGameRunning === true) {
@@ -220,6 +221,7 @@ function gameWon() {
     toggleScreen(winScreen, true);
 }
 
+// Initialize
 init();
 
 window.onload = animate;
