@@ -132,9 +132,8 @@ function ballMove() {
     }
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
-    } else if (ballY + ballRadius > canvas.height) {
-        ballY += ballSpeedY;
-        isGameOver = true;
+    } else if (ballY + ballRadius >= canvas.height) {
+        gameOver();
     }
 }
 
