@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+@font-face {
+    font-family: "RecursiveRegular";
+    src: url("../font/RecursiveMonoCslSt-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    background: #1e1e2e;
+    color: #bac2de;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    font-family: "RecursiveRegular", serif;
+}
+#canvas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+#stop-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+canvas {
+    display: block;
+    border: solid;
+    border-color: #89B4FA; 
+}
