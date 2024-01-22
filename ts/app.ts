@@ -186,7 +186,11 @@ function draw() {
     paddleCollisionDetection();
     brickCollisionDetection();
 
-    animationID = requestAnimationFrame(draw);
+function animate() {
+    if (isGameRunning === true) {
+        draw();
+        animationID = window.requestAnimationFrame(animate);
+    }
 }
 
 function keydDownHandler(e: KeyboardEvent) {
@@ -222,7 +226,7 @@ function gameReload() {
 // Initialize
 init();
 
-window.onload = draw;
+window.onload = animate;
 
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
