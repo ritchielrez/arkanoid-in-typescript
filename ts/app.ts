@@ -11,7 +11,17 @@ const catppuccin = [
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
-let isGameOver = false;
+let isGameRunning = true;
+
+if (!canvas.getContext) {
+    console.error("Canvas context is not supported.");
+    isGameRunning = false;
+}
+const ctx = canvas.getContext("2d");
+if(ctx === null) {
+    console.error("Canvas context is null.");
+    isGameRunning = false;
+}
 
 let score = 0;
 
@@ -60,7 +70,7 @@ function brickInit() {
     }
 }
 
-function brickRender(ctx: CanvasRenderingContext2D | null) {
+function brickRender() {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
             if (bricks[r][c].status === 1) {
@@ -98,7 +108,7 @@ function brickCollisionDetection() {
     }
 }
 
-function ballRender(ctx: CanvasRenderingContext2D | null) {
+function ballRender() {
     ctx!.beginPath();
     ctx!.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
     ctx!.fillStyle = catppuccin[1];
@@ -155,31 +165,21 @@ function init() {
     brickInit();
 }
 
-function scoreRender(ctx: CanvasRenderingContext2D | null) {
-    ctx!.font = "16px Ubuntu";
-    ctx!.fillStyle = catppuccin[7];
-    ctx!.fillText(`Score: ${score}`, 8, 20)
+function scoreRender() {
+    scoreElement.innerHTML = score.toString();
+
+    if (score === brickRowCount * brickColumnCount) {
+        gameWon();
+    }
 }
 
 function draw() {
-    if (!canvas.getContext) {
-        console.error("Canvas context is not supported.");
-        cancelAnimationFrame(animationID);
-        return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    if(ctx === null) {
-        console.error("Canvas context is null.");
-        cancelAnimationFrame(animationID);
-        return;
-    }
     ctx!.clearRect(0, 0, canvas.width, canvas.height)
 
-    ballRender(ctx);
-    paddleRender(ctx);
-    brickRender(ctx);
-    scoreRender(ctx);
+    ballRender();
+    paddleRender();
+    brickRender();
+    scoreRender();
 
     ballMove();
     paddleMove();
