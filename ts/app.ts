@@ -1,14 +1,3 @@
-const catppuccin = [
-    "#45475A",
-    "#F38BA8",
-    "#A6E3A1",
-    "#F9E2AF",
-    "#89B4FA",
-    "#F5C2E7",
-    "#94E2D5",
-    "#BAC2DE",
-];
-
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const winScreen = document.getElementById("win-screen")
 const stopScreen = document.getElementById("stop-screen")
@@ -83,7 +72,7 @@ function brickRender() {
                 bricks[r][c].y = brickY;
                 ctx!.beginPath();
                 ctx!.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx!.fillStyle = catppuccin[2];
+                ctx!.fillStyle = "#a6e3a1";
                 ctx!.fill();
                 ctx!.closePath();
             }
@@ -114,7 +103,7 @@ function brickCollisionDetection() {
 function ballRender() {
     ctx!.beginPath();
     ctx!.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx!.fillStyle = catppuccin[1];
+    ctx!.fillStyle = "#f38ba8";
     ctx!.fill();
     ctx!.closePath();
 }
@@ -133,10 +122,10 @@ function ballMove() {
     }
 }
 
-function paddleRender(ctx: CanvasRenderingContext2D | null) {
+function paddleRender() {
     ctx!.beginPath();
     ctx!.rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    ctx!.fillStyle = catppuccin[3];
+    ctx!.fillStyle = "#f9e2af";
     ctx!.fill();
     ctx!.closePath();
 }
