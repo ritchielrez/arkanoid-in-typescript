@@ -117,10 +117,6 @@ function ballRender() {
     ctx!.fillStyle = catppuccin[1];
     ctx!.fill();
     ctx!.closePath();
-
-    if (isGameOver === true) {
-        gameOver();
-    }
 }
 
 function ballMove() {
