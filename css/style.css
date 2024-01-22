@@ -16,6 +16,10 @@ body {
     border: 0;
     font-family: "RecursiveRegular", serif;
 }
+#game-container {
+    position: relative;
+    text-align: center;
+}
 #score-counter {
     margin-top: 50px;
 }
