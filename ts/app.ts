@@ -91,10 +91,6 @@ function brickCollisionDetection() {
                 ballSpeedY = -ballSpeedY;
                 brick.status = 0;
                 score++;
-
-                if (score === brickRowCount * brickColumnCount) {
-                    gameWon();
-                }
             }
         }
     }
