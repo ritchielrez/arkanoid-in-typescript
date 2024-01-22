@@ -221,7 +221,6 @@ function gameWon() {
     toggleScreen(winScreen, true);
 }
 
-// Initialize
 init();
 
 window.onload = animate;
