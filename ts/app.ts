@@ -88,7 +88,7 @@ function brickCollisionDetection() {
             if (brick.status === 1 && ballY - ballRadius <= brick.y + brickHeight &&
                     ballY + ballRadius >= brick.y && ballX + ballRadius >= brick.x &&
                     ballX <= brick.x + brickWidth) {
-                ballSpeedY = -ballSpeedY
+                ballSpeedY = -ballSpeedY;
                 brick.status = 0;
                 score++;
 
