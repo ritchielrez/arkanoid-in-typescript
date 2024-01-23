@@ -37,6 +37,22 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
 }
+#start-screen {
+    display: block;
+}
+button {
+    border: solid;
+    border-color: #89b4fa;
+    background: #1e1e2e;
+    color: #bac2de;
+    font-size: 1.5em;
+    padding: 1em;
+    border-radius: 1em;
+}
+button:hover {
+    background: #89b4fa;
+    color: #1e1e2e;
+}
 canvas {
     display: block;
     border: solid;

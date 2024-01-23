@@ -1,7 +1,9 @@
-const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-const winScreen = document.getElementById("win-screen")
-const stopScreen = document.getElementById("stop-screen")
-const scoreElement = document.getElementById("score") as HTMLSpanElement;
+let canvas: HTMLCanvasElement;
+let startScreen: HTMLElement | null;
+let winScreen: HTMLElement | null;
+let stopScreen: HTMLElement | null;
+let scoreElement: HTMLSpanElement | null;
+let ctx: CanvasRenderingContext2D | null;
 
 let isGameRunning = true;
 
@@ -223,7 +225,14 @@ function gameWon() {
 
 init();
 
-window.onload = animate;
+    toggleScreen(startScreen, false);
+    ballX = canvas.width / 2;
+    ballY = canvas.height - 30;
+    paddleX = (canvas.width - paddleWidth) / 2;
+    paddleY = canvas.height - paddleHeight;
+    brickInit();
+    animate();
+}
 
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
