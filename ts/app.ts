@@ -7,16 +7,6 @@ let ctx: CanvasRenderingContext2D | null;
 
 let isGameRunning = true;
 
-if (!canvas.getContext) {
-    console.error("Canvas context is not supported.");
-    isGameRunning = false;
-}
-const ctx = canvas.getContext("2d");
-if(ctx === null) {
-    console.error("Canvas context is null.");
-    isGameRunning = false;
-}
-
 let score = 0;
 
 let animationID = 0;
@@ -27,10 +17,9 @@ let ballSpeedY = -5;
 
 const ballRadius = 10;
 
-let paddleX: number;
+let paddleX: number, paddleY: number;
 const paddleWidth = 75;
 const paddleHeight = 10;
-const paddleY = canvas.height - paddleHeight;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -143,15 +132,11 @@ function paddleCollisionDetection() {
     }
 }
 
-function init() {
-    ballX = canvas.width / 2;
-    ballY = canvas.height - 30;
-    paddleX = (canvas.width - paddleWidth) / 2;
-    brickInit();
-}
-
 function scoreRender() {
-    scoreElement.innerHTML = score.toString();
+    if (scoreElement === null) {
+        console.error("scoreElement is null");
+    }
+    scoreElement!.innerHTML = score.toString();
 
     if (score === brickRowCount * brickColumnCount) {
         gameWon();
@@ -196,8 +181,6 @@ function keyUpHandler(e: KeyboardEvent) {
 }
 
 function toggleScreen(element: HTMLElement | null, toggle: boolean) {
-    isGameRunning = false;
-
     if (element === null) {
         console.error("HTMLElement provided to toggleScreen() is null");
         return;
@@ -216,14 +199,31 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
 }
 
 function gameOver() {
+    isGameRunning = false;
     toggleScreen(stopScreen, true);
 }
 
 function gameWon() {
+    isGameRunning = false;
     toggleScreen(winScreen, true);
 }
 
-init();
+function init() {
+    canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    startScreen = document.getElementById("start-screen");
+    winScreen = document.getElementById("win-screen");
+    stopScreen = document.getElementById("stop-screen");
+    scoreElement = document.getElementById("score") as HTMLSpanElement;
+
+    if (!canvas.getContext) {
+        console.error("Canvas context is not supported.");
+        isGameRunning = false;
+    }
+    ctx = canvas.getContext("2d");
+    if(ctx === null) {
+        console.error("Canvas context is null.");
+        isGameRunning = false;
+    }
 
     toggleScreen(startScreen, false);
     ballX = canvas.width / 2;
