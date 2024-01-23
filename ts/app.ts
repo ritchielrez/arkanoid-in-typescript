@@ -12,8 +12,7 @@ let score = 0;
 let animationID = 0;
 
 let ballX: number, ballY: number;
-let ballSpeedX = 5;
-let ballSpeedY = -5;
+let ballSpeedX: number, ballSpeedY: number;
 
 const ballRadius = 10;
 
@@ -226,6 +225,8 @@ function init() {
     }
 
     toggleScreen(startScreen, false);
+    ballSpeedX = 5;
+    ballSpeedY = -5;
     ballX = canvas.width / 2;
     ballY = canvas.height - 30;
     paddleX = (canvas.width - paddleWidth) / 2;
