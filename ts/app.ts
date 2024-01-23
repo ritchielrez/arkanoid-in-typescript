@@ -234,5 +234,11 @@ function init() {
     animate();
 }
 
+function reinit() {
+    isGameRunning = true;
+    toggleScreen(stopScreen, false);
+    init();
+}
+
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
