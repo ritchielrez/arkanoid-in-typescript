@@ -9,7 +9,7 @@ let isGameRunning = true;
 
 let score = 0;
 
-let animationID = 0;
+let gameLoopID = 0;
 
 let ballX: number, ballY: number;
 let ballSpeedX: number, ballSpeedY: number;
@@ -142,6 +142,13 @@ function scoreRender() {
     }
 }
 
+function update() {
+    ballMove();
+    paddleMove();
+    paddleCollisionDetection();
+    brickCollisionDetection();
+}
+
 function draw() {
     ctx!.clearRect(0, 0, canvas!.width, canvas!.height)
 
@@ -149,17 +156,13 @@ function draw() {
     paddleRender();
     brickRender();
     scoreRender();
-
-    ballMove();
-    paddleMove();
-    paddleCollisionDetection();
-    brickCollisionDetection();
 }
 
-function animate() {
+function gameLoop() {
     if (isGameRunning === true) {
         draw();
-        animationID = window.requestAnimationFrame(animate);
+        update();
+        gameLoopID = window.requestAnimationFrame(gameLoop);
     }
 }
 
@@ -228,15 +231,17 @@ function init() {
         isGameRunning = false;
     }
 
-    toggleScreen(startScreen, false);
     ballSpeedX = 5;
     ballSpeedY = -5;
     ballX = canvas!.width / 2;
     ballY = canvas!.height - 30;
     paddleX = (canvas!.width - paddleWidth) / 2;
     paddleY = canvas!.height - paddleHeight;
+
+    toggleScreen(startScreen, false);
+
     brickInit();
-    animate();
+    gameLoop();
 }
 
 function reinit() {
