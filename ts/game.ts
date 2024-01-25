@@ -225,6 +225,7 @@ function init() {
         console.error("Canvas context is not supported");
         isGameRunning = false;
     }
+
     ctx = canvas!.getContext("2d");
     if(ctx === null) {
         console.error("Canvas context is null");
