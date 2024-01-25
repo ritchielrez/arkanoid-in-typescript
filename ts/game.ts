@@ -247,6 +247,7 @@ function init() {
 }
 
 function reinit() {
+    score = 0;
     isGameRunning = true;
     toggleScreen(stopScreen, false);
     init();
