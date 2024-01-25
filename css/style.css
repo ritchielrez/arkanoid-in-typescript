@@ -49,6 +49,7 @@ button {
     padding: 1em;
     border-radius: 1em;
     font-family: "RecursiveRegular", serif;
+    margin: 10px;
 }
 button:hover {
     background: #89b4fa;
