@@ -236,6 +236,7 @@ function init() {
     ballSpeedY = -5;
     ballX = canvas!.width / 2;
     ballY = canvas!.height - 30;
+
     paddleX = (canvas!.width - paddleWidth) / 2;
     paddleY = canvas!.height - paddleHeight;
 
