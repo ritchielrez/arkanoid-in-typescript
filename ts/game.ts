@@ -259,5 +259,15 @@ function backToStartScreen() {
     toggleScreen(winScreen, false);
     toggleScreen(startScreen, true);
 }
+
+function start() {
+    if (firstRun === true) {
+        init();
+        firstRun = false;
+        return;
+    }
+    reinit();
+}
+
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
