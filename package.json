@@ -4,7 +4,8 @@
   "description": "A 2D breakout game made using HTML5 canvas and Typescript",
   "main": "js/game.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc"
   },
   "repository": {
     "type": "git",
