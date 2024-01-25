@@ -253,5 +253,11 @@ function reinit() {
     init();
 }
 
+function backToStartScreen() {
+    score = 0;
+    toggleScreen(stopScreen, false);
+    toggleScreen(winScreen, false);
+    toggleScreen(startScreen, true);
+}
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
