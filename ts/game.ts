@@ -11,6 +11,8 @@ let score = 0;
 
 let gameLoopID = 0;
 
+let firstRun = true;
+
 let ballX: number, ballY: number;
 let ballSpeedX: number, ballSpeedY: number;
 
