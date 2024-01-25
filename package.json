@@ -1,26 +1,21 @@
 {
-  "name": "typescript-html-canvas",
+  "name": "breakout-game-typescript",
   "version": "0.0.1",
-  "description": "A 2D breakout game made using HTML5 canvas and Typescript ",
-  "main": "ts/app.ts",
+  "description": "A 2D breakout game made using HTML5 canvas and Typescript",
+  "main": "js/game.js",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "build": "npx tsc"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ritchielrez/typescript-html-canvas.git"
+    "url": "git+https://github.com/ritchielrez/breakout-game-typescript.git"
   },
-  "keywords": [
-    "Canvas",
-    "Typescript"
-  ],
   "author": "Ritchiel Rez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ritchielrez/typescript-html-canvas/issues"
+    "url": "https://github.com/ritchielrez/breakout-game-typescript/issues"
   },
-  "homepage": "https://github.com/ritchielrez/typescript-html-canvas#readme",
+  "homepage": "https://github.com/ritchielrez/breakout-game-typescript#readme",
   "devDependencies": {
     "typescript": "^5.3.3"
   }
