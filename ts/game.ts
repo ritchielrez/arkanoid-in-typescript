@@ -16,6 +16,7 @@ const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
 let firstRun = true;
+let isGameRunning = true;
 
 class Game {
     // Readonly forces these fields to be only initialized from the constructor
@@ -26,7 +27,6 @@ class Game {
     readonly stopScreen: HTMLElement | null = null;
     readonly scoreElement: HTMLSpanElement | null = null;
 
-    isRunning = true;
     loopID = 0;
     score = 0;
 
@@ -38,21 +38,21 @@ class Game {
                 scoreElement: HTMLSpanElement | null) {
         if (canvas === null) {
             console.error("Canvas is null");
-            this.isRunning = false;
+            isGameRunning = false;
             return;
         }
         this.canvas = canvas;
 
         if (!this.canvas.getContext) {
             console.error("Canvas context is not supported");
-            this.isRunning = false;
+            isGameRunning = false;
             return;
         }
 
         const ctx = this.canvas.getContext("2d");
         if(ctx === null) {
             console.error("Canvas context is null");
-            this.isRunning = false;
+            isGameRunning = false;
             return;
         }
         this.ctx = ctx;
@@ -197,7 +197,7 @@ function draw() {
 }
 
 function gameLoop() {
-    if (game.isRunning === true) {
+    if (isGameRunning === true) {
         draw();
         update();
         game.loopID = window.requestAnimationFrame(gameLoop);
@@ -239,12 +239,12 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
 }
 
 function gameOver() {
-    game.isRunning = false;
+    isGameRunning = false;
     toggleScreen(game.stopScreen, true);
 }
 
 function gameWon() {
-    game.isRunning = false;
+    isGameRunning = false;
     toggleScreen(game.winScreen, true);
 }
 
@@ -265,7 +265,7 @@ function init() {
 
 function reinit() {
     game.score = 0;
-    game.isRunning = true;
+    isGameRunning = true;
     toggleScreen(game.stopScreen, false);
     init();
 }
@@ -293,18 +293,21 @@ document.addEventListener("keyup", keyUpHandler, false);
 let startButton = document.getElementById("start-button");
 if (startButton === null) {
     console.error("Start button is null");
+    isGameRunning = false;
 }
 startButton!.addEventListener("click", start);
 
 let restartButton = document.getElementById("restart-button");
 if (restartButton === null) {
     console.error("Restart button is null");
+    isGameRunning = false;
 }
 restartButton!.addEventListener("click", start);
 
 let backToStartScreenButton = document.getElementById("back-to-start-screen-button");
 if (backToStartScreenButton === null) {
     console.error("Back to start screen button is null");
+    isGameRunning = false;
 }
 backToStartScreenButton!.addEventListener("click", () => {
     game.score = 0;
