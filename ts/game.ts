@@ -1,18 +1,3 @@
-let canvas: HTMLCanvasElement | null;
-let startScreen: HTMLElement | null;
-let winScreen: HTMLElement | null;
-let stopScreen: HTMLElement | null;
-let scoreElement: HTMLSpanElement | null;
-let ctx: CanvasRenderingContext2D | null;
-
-let isGameRunning = true;
-
-let score = 0;
-
-let gameLoopID = 0;
-
-let firstRun = true;
-
 let ballX: number, ballY: number;
 let ballSpeedX: number, ballSpeedY: number;
 
@@ -22,9 +7,6 @@ let paddleX: number, paddleY: number;
 const paddleWidth = 75;
 const paddleHeight = 10;
 
-let rightPressed = false;
-let leftPressed = false;
-
 const brickRowCount = 3;
 const brickColumnCount = 11;
 const brickWidth = 100;
@@ -32,6 +14,56 @@ const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
+
+class Game {
+    // Readonly forces these fields to be only initialized from the constructor
+    readonly canvas!: HTMLCanvasElement;
+    readonly ctx!: CanvasRenderingContext2D;
+    readonly startScreen: HTMLElement | null = null;
+    readonly winScreen: HTMLElement | null = null;
+    readonly stopScreen: HTMLElement | null = null;
+    readonly scoreElement: HTMLSpanElement | null = null;
+
+    isRunning = true;
+    firstRun = true;
+    loopID = 0;
+    score = 0;
+
+    rightKeyPressed = false;
+    leftKeyPressed = false;
+
+    constructor(canvas: HTMLCanvasElement | null, startScreen: HTMLElement | null, 
+                winScreen: HTMLElement | null, stopScreen: HTMLElement | null, 
+                scoreElement: HTMLSpanElement | null) {
+        if (canvas === null) {
+            console.error("Canvas is null");
+            this.isRunning = false;
+            return;
+        }
+        this.canvas = canvas;
+
+        if (!this.canvas.getContext) {
+            console.error("Canvas context is not supported");
+            this.isRunning = false;
+            return;
+        }
+
+        const ctx = this.canvas.getContext("2d");
+        if(ctx === null) {
+            console.error("Canvas context is null");
+            this.isRunning = false;
+            return;
+        }
+        this.ctx = ctx;
+
+        this.startScreen = startScreen;
+        this.winScreen = winScreen;
+        this.stopScreen = stopScreen;
+        this.scoreElement = scoreElement;
+    }
+}
+
+let game: Game;
 
 interface Brick {
     x: number;
@@ -65,11 +97,11 @@ function brickRender() {
                 bricks[r][c].y = brickY;
 
                 // Render
-                ctx!.beginPath();
-                ctx!.rect(bricks[r][c].x, bricks[r][c].y, brickWidth, brickHeight);
-                ctx!.fillStyle = "#a6e3a1";
-                ctx!.fill();
-                ctx!.closePath();
+                game.ctx.beginPath();
+                game.ctx.rect(bricks[r][c].x, bricks[r][c].y, brickWidth, brickHeight);
+                game.ctx.fillStyle = "#a6e3a1";
+                game.ctx.fill();
+                game.ctx.closePath();
             }
         }
     }
@@ -85,46 +117,46 @@ function brickCollisionDetection() {
                     ballX <= brick.x + brickWidth) {
                 ballSpeedY = -ballSpeedY;
                 brick.status = 0;
-                score++;
+                game.score++;
             }
         }
     }
 }
 
 function ballRender() {
-    ctx!.beginPath();
-    ctx!.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx!.fillStyle = "#f38ba8";
-    ctx!.fill();
-    ctx!.closePath();
+    game.ctx.beginPath();
+    game.ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+    game.ctx.fillStyle = "#f38ba8";
+    game.ctx.fill();
+    game.ctx.closePath();
 }
 
 function ballMove() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
-    if (ballX + ballSpeedX <= 0 || ballX + ballRadius + ballSpeedX >= canvas!.width) {
+    if (ballX + ballSpeedX <= 0 || ballX + ballRadius + ballSpeedX >= game.canvas.width) {
         ballSpeedX = -ballSpeedX;
     }
     if (ballY + ballSpeedY <= 0) {
         ballSpeedY = -ballSpeedY;
-    } else if (ballY + ballRadius >= canvas!.height) {
+    } else if (ballY + ballRadius >= game.canvas.height) {
         gameOver();
     }
 }
 
 function paddleRender() {
-    ctx!.beginPath();
-    ctx!.rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    ctx!.fillStyle = "#f9e2af";
-    ctx!.fill();
-    ctx!.closePath();
+    game.ctx.beginPath();
+    game.ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
+    game.ctx.fillStyle = "#f9e2af";
+    game.ctx.fill();
+    game.ctx.closePath();
 }
 
 function paddleMove() {
-    if (rightPressed && paddleX + paddleWidth + 7 <= canvas!.width) {
+    if (game.rightKeyPressed && paddleX + paddleWidth + 7 <= game.canvas.width) {
         paddleX += 7;
-    } else if (leftPressed && paddleX - 7 >= 0) {
+    } else if (game.leftKeyPressed && paddleX - 7 >= 0) {
         paddleX -= 7;
     }
 }
@@ -137,12 +169,12 @@ function paddleCollisionDetection() {
 }
 
 function scoreRender() {
-    if (scoreElement === null) {
+    if (game.scoreElement === null) {
         console.error("scoreElement is null");
     }
-    scoreElement!.innerHTML = score.toString();
+    game.scoreElement!.innerHTML = game.score.toString();
 
-    if (score === brickRowCount * brickColumnCount) {
+    if (game.score === brickRowCount * brickColumnCount) {
         gameWon();
     }
 }
@@ -155,7 +187,7 @@ function update() {
 }
 
 function draw() {
-    ctx!.clearRect(0, 0, canvas!.width, canvas!.height)
+    game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
     ballRender();
     paddleRender();
@@ -164,26 +196,26 @@ function draw() {
 }
 
 function gameLoop() {
-    if (isGameRunning === true) {
+    if (game.isRunning === true) {
         draw();
         update();
-        gameLoopID = window.requestAnimationFrame(gameLoop);
+        game.loopID = window.requestAnimationFrame(gameLoop);
     }
 }
 
 function keydDownHandler(e: KeyboardEvent) {
     if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = true;
+        game.rightKeyPressed = true;
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = true;
+        game.leftKeyPressed = true;
     }
 }
 
 function keyUpHandler(e: KeyboardEvent) {
     if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = false;
+        game.rightKeyPressed = false;
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = false;
+        game.leftKeyPressed = false;
     }
 }
 
@@ -201,74 +233,61 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
         display = "none";
     }
 
-    ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+    game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
     element!.style.display = display;
 }
 
 function gameOver() {
-    isGameRunning = false;
-    toggleScreen(stopScreen, true);
+    game.isRunning = false;
+    toggleScreen(game.stopScreen, true);
 }
 
 function gameWon() {
-    isGameRunning = false;
-    toggleScreen(winScreen, true);
+    game.isRunning = false;
+    toggleScreen(game.winScreen, true);
 }
 
 function init() {
-    canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    startScreen = document.getElementById("start-screen");
-    winScreen = document.getElementById("win-screen");
-    stopScreen = document.getElementById("stop-screen");
-    scoreElement = document.getElementById("score") as HTMLSpanElement;
-
-    if (canvas === null) {
-        console.error("Canvas is null");
-    }
-
-    if (!canvas!.getContext) {
-        console.error("Canvas context is not supported");
-        isGameRunning = false;
-    }
-
-    ctx = canvas!.getContext("2d");
-    if(ctx === null) {
-        console.error("Canvas context is null");
-        isGameRunning = false;
-    }
-
     ballSpeedX = 5;
     ballSpeedY = -5;
-    ballX = canvas!.width / 2;
-    ballY = canvas!.height - 30;
+    ballX = game.canvas.width / 2;
+    ballY = game.canvas.height - 30;
 
-    paddleX = (canvas!.width - paddleWidth) / 2;
-    paddleY = canvas!.height - paddleHeight;
+    paddleX = (game.canvas.width - paddleWidth) / 2;
+    paddleY = game.canvas.height - paddleHeight;
 
-    toggleScreen(startScreen, false);
+    toggleScreen(game.startScreen, false);
 
     brickInit();
     gameLoop();
 }
 
 function reinit() {
-    score = 0;
-    isGameRunning = true;
-    toggleScreen(stopScreen, false);
+    game.score = 0;
+    game.isRunning = true;
+    toggleScreen(game.stopScreen, false);
     init();
 }
 
 function backToStartScreen() {
-    score = 0;
-    toggleScreen(stopScreen, false);
-    toggleScreen(winScreen, false);
-    toggleScreen(startScreen, true);
+    game.score = 0;
+    toggleScreen(game.stopScreen, false);
+    toggleScreen(game.winScreen, false);
+    toggleScreen(game.startScreen, true);
 }
 
 function start() {
-    if (firstRun === true) {
+    let canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    let startScreen = document.getElementById("start-screen");
+    let winScreen = document.getElementById("win-screen");
+    let stopScreen = document.getElementById("stop-screen");
+    let scoreElement = document.getElementById("score") as HTMLSpanElement;
+
+    game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
+
+    if (game.firstRun === true) {
         init();
-        firstRun = false;
+        game.firstRun = false;
         return;
     }
     reinit();
