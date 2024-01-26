@@ -270,13 +270,6 @@ function reinit() {
     init();
 }
 
-function backToStartScreen() {
-    game.score = 0;
-    toggleScreen(game.stopScreen, false);
-    toggleScreen(game.winScreen, false);
-    toggleScreen(game.startScreen, true);
-}
-
 function start() {
     let canvas = document.getElementById("canvas") as HTMLCanvasElement;
     let startScreen = document.getElementById("start-screen");
@@ -296,3 +289,26 @@ function start() {
 
 document.addEventListener("keydown", keydDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+let startButton = document.getElementById("start-button");
+if (startButton === null) {
+    console.error("Start button is null");
+}
+startButton!.addEventListener("click", start);
+
+let restartButton = document.getElementById("restart-button");
+if (restartButton === null) {
+    console.error("Restart button is null");
+}
+restartButton!.addEventListener("click", start);
+
+let backToStartScreenButton = document.getElementById("back-to-start-screen-button");
+if (backToStartScreenButton === null) {
+    console.error("Back to start screen button is null");
+}
+backToStartScreenButton!.addEventListener("click", () => {
+    game.score = 0;
+    toggleScreen(game.stopScreen, false);
+    toggleScreen(game.winScreen, false);
+    toggleScreen(game.startScreen, true);
+});
