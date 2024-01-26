@@ -58,24 +58,18 @@ function brickRender() {
     for (let r = 0; r < brickRowCount; ++r) {
         for (let c = 0; c < brickColumnCount; ++c) {
             if (bricks[r][c].status === 1) {
+                // Update the x and y values
+                const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                bricks[r][c].x = brickX;
+                bricks[r][c].y = brickY;
+
+                // Render
                 ctx!.beginPath();
                 ctx!.rect(bricks[r][c].x, bricks[r][c].y, brickWidth, brickHeight);
                 ctx!.fillStyle = "#a6e3a1";
                 ctx!.fill();
                 ctx!.closePath();
-            }
-        }
-    }
-}
-
-function brickUpdate() {
-    for (let r = 0; r < brickRowCount; ++r) {
-        for (let c = 0; c < brickColumnCount; ++c) {
-            if (bricks[r][c].status === 1) {
-                const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-                const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-                bricks[r][c].x = brickX;
-                bricks[r][c].y = brickY;
             }
         }
     }
@@ -156,7 +150,6 @@ function scoreRender() {
 function update() {
     ballMove();
     paddleMove();
-    brickUpdate();
     paddleCollisionDetection();
     brickCollisionDetection();
 }
