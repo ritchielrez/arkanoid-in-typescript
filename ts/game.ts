@@ -15,6 +15,8 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
+let firstRun = true;
+
 class Game {
     // Readonly forces these fields to be only initialized from the constructor
     readonly canvas!: HTMLCanvasElement;
@@ -25,7 +27,6 @@ class Game {
     readonly scoreElement: HTMLSpanElement | null = null;
 
     isRunning = true;
-    firstRun = true;
     loopID = 0;
     score = 0;
 
@@ -285,9 +286,9 @@ function start() {
 
     game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
 
-    if (game.firstRun === true) {
+    if (firstRun === true) {
         init();
-        game.firstRun = false;
+        firstRun = false;
         return;
     }
     reinit();
