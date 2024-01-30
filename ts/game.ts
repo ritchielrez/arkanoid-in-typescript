@@ -15,8 +15,6 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
-// These values are global because encapsulating them causes more inconvinience.
-// Previously they were stored in the `Game` class.
 let firstRun = true;
 let isGameRunning = true;
 
