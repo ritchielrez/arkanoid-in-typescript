@@ -159,8 +159,8 @@ function init() {
     const paddleWidth = 75;
     const paddleHeight = 10;
 
-    const brickRowCount = 5;
-    const brickColumnCount = 5;
+    const brickRowCount = 1;
+    const brickColumnCount = 1;
     const brickWidth = 100;
     const brickHeight = 20;
     const brickPadding = 30;
@@ -187,6 +187,7 @@ function init() {
 function reinit() {
     game.score = 0;
     isGameRunning = true;
+    toggleScreen(game.winScreen, false);
     toggleScreen(game.stopScreen, false);
     init();
 }
@@ -218,19 +219,38 @@ if (startButton === null) {
 }
 startButton!.addEventListener("click", start);
 
-let restartButton = document.getElementById("restart-button");
-if (restartButton === null) {
-    console.error("Restart button is null");
+let restartButton1 = document.getElementById("restart-button-1");
+if (restartButton1 === null) {
+    console.error("Restart button 1 is null");
     isGameRunning = false;
 }
-restartButton!.addEventListener("click", start);
+restartButton1!.addEventListener("click", start);
 
-let backToStartScreenButton = document.getElementById("back-to-start-screen-button");
-if (backToStartScreenButton === null) {
-    console.error("Back to start screen button is null");
+let restartButton2 = document.getElementById("restart-button-2");
+if (restartButton2 === null) {
+    console.error("Restart button 2 is null");
     isGameRunning = false;
 }
-backToStartScreenButton!.addEventListener("click", () => {
+restartButton2!.addEventListener("click", start);
+
+let backToStartScreenButton1 = document.getElementById("back-to-start-screen-button-1");
+if (backToStartScreenButton1 === null) {
+    console.error("Back to start screen button 1 is null");
+    isGameRunning = false;
+}
+backToStartScreenButton1!.addEventListener("click", () => {
+    game.score = 0;
+    toggleScreen(game.stopScreen, false);
+    toggleScreen(game.winScreen, false);
+    toggleScreen(game.startScreen, true);
+});
+
+let backToStartScreenButton2 = document.getElementById("back-to-start-screen-button-2");
+if (backToStartScreenButton2 === null) {
+    console.error("Back to start screen button 2 is null");
+    isGameRunning = false;
+}
+backToStartScreenButton2!.addEventListener("click", () => {
     game.score = 0;
     toggleScreen(game.stopScreen, false);
     toggleScreen(game.winScreen, false);
