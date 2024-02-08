@@ -1,3 +1,8 @@
+import { Entities, EntitiesRender, EntitiesUpdate } from "./entity.js"
+import { Ball } from "./ball.js"
+import { Bricks } from "./brick.js"
+import { BallBounceToWalls, BricksCollisionDetection } from "./collision.js"
+
 let ballX: number, ballY: number;
 let ballSpeedX: number, ballSpeedY: number;
 
@@ -66,84 +71,11 @@ class Game {
 
 let game: Game;
 
-interface Brick {
-    x: number;
-    y: number;
-    status: number;
-}
-
-let bricks: Brick[][]= [];
+let ball: Ball;
+let bricks: Bricks;
 
 function getRandom(min: number, max: number) : number {
     return Math.floor(Math.random() * (max - min) + min);
-}
-
-function brickInit() {
-    for (let r = 0; r < brickRowCount; ++r) {
-        bricks[r] = [];
-        for (let c = 0; c < brickColumnCount; ++c) {
-            bricks[r][c] = { x: 0, y: 0, status: 1};
-        }
-    }
-}
-
-function brickRender() {
-    for (let r = 0; r < brickRowCount; ++r) {
-        for (let c = 0; c < brickColumnCount; ++c) {
-            if (bricks[r][c].status === 1) {
-                // Update the x and y values
-                const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-                const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-                bricks[r][c].x = brickX;
-                bricks[r][c].y = brickY;
-
-                // Render
-                game.ctx.beginPath();
-                game.ctx.rect(bricks[r][c].x, bricks[r][c].y, brickWidth, brickHeight);
-                game.ctx.fillStyle = "#a6e3a1";
-                game.ctx.fill();
-                game.ctx.closePath();
-            }
-        }
-    }
-}
-
-function brickCollisionDetection() {
-    for (let r = 0; r < brickRowCount; ++r) {
-        for (let c = 0; c < brickColumnCount; ++c) {
-            const brick = bricks[r][c];
-
-            if (brick.status === 1 && ballY - ballRadius <= brick.y + brickHeight &&
-                    ballY + ballRadius >= brick.y && ballX + ballRadius >= brick.x &&
-                    ballX <= brick.x + brickWidth) {
-                ballSpeedY = -ballSpeedY;
-                brick.status = 0;
-                game.score++;
-            }
-        }
-    }
-}
-
-function ballRender() {
-    game.ctx.beginPath();
-    game.ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    game.ctx.fillStyle = "#f38ba8";
-    game.ctx.fill();
-    game.ctx.closePath();
-}
-
-function ballMove() {
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
-
-    if (ballX + ballSpeedX <= 0 || ballX + ballRadius + ballSpeedX >= game.canvas.width) {
-        ballSpeedX = -ballSpeedX;
-    }
-    if (ballY + ballSpeedY <= 0) {
-        ballSpeedY = -ballSpeedY;
-    } else if (ballY + ballRadius >= game.canvas.height) {
-        gameOver();
-    }
 }
 
 function paddleRender() {
@@ -181,18 +113,20 @@ function scoreRender() {
 }
 
 function update() {
-    ballMove();
+    EntitiesUpdate(ball.entities.x, ball.entities.y, ball.entities.speedX, ball.entities.speedY)
     paddleMove();
     paddleCollisionDetection();
-    brickCollisionDetection();
+    if (BallBounceToWalls(ball, game.canvas.width, game.canvas.height)) {
+        gameOver();
+    }
+    game.score = BricksCollisionDetection(bricks, ball, game.score);
 }
 
 function draw() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
-    ballRender();
     paddleRender();
-    brickRender();
+    EntitiesRender([ball.entities, bricks.entities], game.ctx, ["#f38ba8", "#a6e3a1"]);
     scoreRender();
 }
 
@@ -254,12 +188,14 @@ function init() {
     ballX = game.canvas.width / 2;
     ballY = game.canvas.height - 30;
 
+    ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
+    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
+
     paddleX = (game.canvas.width - paddleWidth) / 2;
     paddleY = game.canvas.height - paddleHeight;
 
     toggleScreen(game.startScreen, false);
 
-    brickInit();
     gameLoop();
 }
 
