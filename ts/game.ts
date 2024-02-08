@@ -159,13 +159,13 @@ function init() {
     const paddleWidth = 75;
     const paddleHeight = 10;
 
-    const brickRowCount = 3;
-    const brickColumnCount = 11;
+    const brickRowCount = 5;
+    const brickColumnCount = 5;
     const brickWidth = 100;
     const brickHeight = 20;
-    const brickPadding = 10;
-    const brickOffsetTop = 30;
-    const brickOffsetLeft = 30;
+    const brickPadding = 30;
+    const brickOffsetTop = 75;
+    const brickOffsetLeft = canvas.width / 8;
 
     const ballSpeedX = 5;
     const ballSpeedY = -5;
