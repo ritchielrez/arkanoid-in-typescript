@@ -15,7 +15,9 @@ class Game {
     readonly stopScreen: HTMLElement | null = null;
     readonly scoreElement: HTMLSpanElement | null = null;
 
-    loopID = 0;
+    readonly fps = 60.0;
+    readonly frameTime = 1000.0 / this.fps;
+
     score = 0;
 
     rightKeyPressed = false;
@@ -92,11 +94,27 @@ function draw() {
     scoreRender();
 }
 
-function gameLoop() {
+let previousTime: number = 0.0;
+let currentTime = 0.0;
+let deltaTime = 0.0;
+
+function gameLoop(timeStamp: number) {
     if (isGameRunning === true) {
+        currentTime = timeStamp;
+        if(previousTime === 0) {
+            previousTime = currentTime;
+        }
+        deltaTime = currentTime - previousTime;
+
+        if(deltaTime >= game.frameTime) {
+            previousTime = currentTime - (deltaTime % game.frameTime);
+            update();
+        }
         draw();
-        update();
-        game.loopID = window.requestAnimationFrame(gameLoop);
+
+        window.requestAnimationFrame(gameLoop);
+    } else {
+        game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
     }
 }
 
@@ -163,7 +181,7 @@ function init() {
 
     toggleScreen(game.startScreen, false);
 
-    gameLoop();
+    window.requestAnimationFrame(gameLoop);
 }
 
 function reinit() {
