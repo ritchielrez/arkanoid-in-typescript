@@ -1,7 +1,7 @@
 import { Entities, EntitiesRender, EntitiesUpdate } from "./entity.js"
 import { Ball } from "./ball.js"
+import { Paddle } from "./paddle.js"
 import { Bricks } from "./brick.js"
-import { BallBounceToWalls, BricksCollisionDetection } from "./collision.js"
 
 let ballX: number, ballY: number;
 let ballSpeedX: number, ballSpeedY: number;
@@ -72,6 +72,7 @@ class Game {
 let game: Game;
 
 let ball: Ball;
+let paddle: Paddle;
 let bricks: Bricks;
 
 function getRandom(min: number, max: number) : number {
@@ -113,20 +114,20 @@ function scoreRender() {
 }
 
 function update() {
-    EntitiesUpdate(ball.entities.x, ball.entities.y, ball.entities.speedX, ball.entities.speedY)
-    paddleMove();
-    paddleCollisionDetection();
-    if (BallBounceToWalls(ball, game.canvas.width, game.canvas.height)) {
+    paddle.move(game.leftKeyPressed, game.rightKeyPressed, game.canvas.width);
+    EntitiesUpdate(ball.entities.x, ball.entities.y, ball.entities.speedX, ball.entities.speedY);
+    paddle.collisionDetection(ball);
+    if (ball.bounceToWalls(game.canvas.width, game.canvas.height)) {
         gameOver();
     }
-    game.score = BricksCollisionDetection(bricks, ball, game.score);
+    game.score = bricks.collisionDetection(ball, game.score);
 }
 
 function draw() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
-    paddleRender();
-    EntitiesRender([ball.entities, bricks.entities], game.ctx, ["#f38ba8", "#a6e3a1"]);
+    // paddleRender();
+    EntitiesRender([ball.entities, paddle.entities, bricks.entities], game.ctx, ["#f38ba8", "#f9e2af", "#a6e3a1"]);
     scoreRender();
 }
 
@@ -188,11 +189,12 @@ function init() {
     ballX = game.canvas.width / 2;
     ballY = game.canvas.height - 30;
 
-    ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
-    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
-
     paddleX = (game.canvas.width - paddleWidth) / 2;
     paddleY = game.canvas.height - paddleHeight;
+
+    ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
+    paddle = new Paddle(paddleX, paddleY, 7, 0, paddleWidth, paddleHeight)
+    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
 
     toggleScreen(game.startScreen, false);
 
