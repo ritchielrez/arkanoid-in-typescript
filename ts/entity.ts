@@ -3,6 +3,14 @@ export enum EntShape {
     Rectangle,
 }
 
+// Entities is a class that holds basic data that a entity should have
+// But here we are using the concept of AoS (at least trying), so
+// here we don't have a Entity holding x,y, but we have a "Entities"
+// class holding arrays x and y values. All the entities should 
+// have a instance of this class as a member, because we are using
+// composition over inheritance here.
+//
+// Maybe this is just over-engineering, but this is my pet project :)
 export interface Entities {
     x: Float64Array;
     y: Float64Array;
