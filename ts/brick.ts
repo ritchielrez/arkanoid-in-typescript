@@ -31,8 +31,8 @@ export class Bricks {
             for (let r = 0; r < this.rowCount; ++r) {
                 const idx = this.rowCount * c + r;
                 // Update the x and y values
-                this.entities.x[idx] = c * (this.entities.width + this.padding) + this.offsetLeft;
-                this.entities.y[idx] = r * (this.entities.height + this.padding) + this.offsetTop;
+                this.entities.x[idx] = r * (this.entities.width + this.padding) + this.offsetLeft;
+                this.entities.y[idx] = c * (this.entities.height + this.padding) + this.offsetTop;
                 this.entities.status[idx] = true;
             }
         }
