@@ -3,23 +3,6 @@ import { Ball } from "./ball.js"
 import { Paddle } from "./paddle.js"
 import { Bricks } from "./brick.js"
 
-let ballX: number, ballY: number;
-let ballSpeedX: number, ballSpeedY: number;
-
-const ballRadius = 10;
-
-let paddleX: number, paddleY: number;
-const paddleWidth = 75;
-const paddleHeight = 10;
-
-const brickRowCount = 3;
-const brickColumnCount = 11;
-const brickWidth = 100;
-const brickHeight = 20;
-const brickPadding = 10;
-const brickOffsetTop = 30;
-const brickOffsetLeft = 30;
-
 let firstRun = true;
 let isGameRunning = true;
 
@@ -85,7 +68,7 @@ function scoreRender() {
     }
     game.scoreElement!.innerHTML = game.score.toString();
 
-    if (game.score === brickRowCount * brickColumnCount) {
+    if (game.score === bricks.rowCount * bricks.columnCount) {
         isGameRunning = false;
         toggleScreen(game.winScreen, true);
     }
@@ -153,13 +136,26 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
 
 
 function init() {
-    ballSpeedX = 5;
-    ballSpeedY = -5;
-    ballX = game.canvas.width / 2;
-    ballY = game.canvas.height - 30;
+    const ballRadius = 10;
 
-    paddleX = (game.canvas.width - paddleWidth) / 2;
-    paddleY = game.canvas.height - paddleHeight;
+    const paddleWidth = 75;
+    const paddleHeight = 10;
+
+    const brickRowCount = 3;
+    const brickColumnCount = 11;
+    const brickWidth = 100;
+    const brickHeight = 20;
+    const brickPadding = 10;
+    const brickOffsetTop = 30;
+    const brickOffsetLeft = 30;
+
+    const ballSpeedX = 5;
+    const ballSpeedY = -5;
+    const ballX = game.canvas.width / 2;
+    const ballY = game.canvas.height - 30;
+
+    const paddleX = (game.canvas.width - paddleWidth) / 2;
+    const paddleY = game.canvas.height - paddleHeight;
 
     ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
     paddle = new Paddle(paddleX, paddleY, 7, 0, paddleWidth, paddleHeight)
@@ -178,11 +174,11 @@ function reinit() {
 }
 
 function start() {
-    let canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    let startScreen = document.getElementById("start-screen");
-    let winScreen = document.getElementById("win-screen");
-    let stopScreen = document.getElementById("stop-screen");
-    let scoreElement = document.getElementById("score") as HTMLSpanElement;
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    const startScreen = document.getElementById("start-screen");
+    const winScreen = document.getElementById("win-screen");
+    const stopScreen = document.getElementById("stop-screen");
+    const scoreElement = document.getElementById("score") as HTMLSpanElement;
 
     game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
 
