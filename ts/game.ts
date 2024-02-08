@@ -165,7 +165,7 @@ function init() {
     const brickHeight = 20;
     const brickPadding = 30;
     const brickOffsetTop = 75;
-    const brickOffsetLeft = canvas.width / 8;
+    const brickOffsetLeft = game.canvas.width / 8;
 
     const ballSpeedX = 5;
     const ballSpeedY = -5;
