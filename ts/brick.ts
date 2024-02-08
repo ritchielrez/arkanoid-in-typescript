@@ -1,4 +1,5 @@
 import { EntShape, Entities } from "./entity.js"
+import { Ball } from "./ball.js"
 
 export class Bricks {
     entities: Entities;
@@ -35,5 +36,23 @@ export class Bricks {
                 this.entities.status[idx] = true;
             }
         }
+    }
+
+    collisionDetection(ball: Ball, score: number): number {
+        for (let c = 0; c < this.columnCount; ++c) {
+            for (let r = 0; r < this.rowCount; ++r) {
+                const idx = this.rowCount * c + r;
+                if (this.entities.status[idx] === true && ball.entities.y[0] - ball.entities.width <= 
+                        this.entities.y[idx] + this.entities.height &&
+                        ball.entities.y[0] + ball.entities.width >= this.entities.y[idx] && 
+                        ball.entities.x[0] + ball.entities.width >= this.entities.x[idx] &&
+                        ball.entities.x[0] <= this.entities.x[idx] + this.entities.width) {
+                    ball.entities.speedY[0] = -(ball.entities.speedY[0]);
+                    this.entities.status[idx] = false;
+                    score++;
+                }
+            }
+        }
+        return score;
     }
 }

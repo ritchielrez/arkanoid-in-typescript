@@ -15,4 +15,17 @@ export class Ball {
             entShape: EntShape.Circle,
         };
     }
+
+    bounceToWalls(canvasWidth: number, canvasHeight: number): boolean {
+        if (this.entities.x[0] + this.entities.speedX[0] <= 0 || 
+            this.entities.x[0] + this.entities.width + this.entities.speedX[0] >= canvasWidth) {
+            this.entities.speedX[0] = -(this.entities.speedX[0]);
+        }
+        if (this.entities.y[0] + this.entities.speedY[0] <= 0) {
+            this.entities.speedY[0] = -(this.entities.speedY[0]);
+        } else if (this.entities.y[0] + this.entities.width >= canvasHeight) {
+            return true;
+        }
+        return false;
+    }
 }
