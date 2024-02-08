@@ -38,8 +38,8 @@ class Game {
     rightKeyPressed = false;
     leftKeyPressed = false;
 
-    constructor(canvas: HTMLCanvasElement | null, startScreen: HTMLElement | null, 
-                winScreen: HTMLElement | null, stopScreen: HTMLElement | null, 
+    constructor(canvas: HTMLCanvasElement | null, startScreen: HTMLElement | null,
+                winScreen: HTMLElement | null, stopScreen: HTMLElement | null,
                 scoreElement: HTMLSpanElement | null) {
         if (canvas === null) {
             console.error("Canvas is null");
@@ -79,29 +79,6 @@ function getRandom(min: number, max: number) : number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function paddleRender() {
-    game.ctx.beginPath();
-    game.ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    game.ctx.fillStyle = "#f9e2af";
-    game.ctx.fill();
-    game.ctx.closePath();
-}
-
-function paddleMove() {
-    if (game.rightKeyPressed && paddleX + paddleWidth + 7 <= game.canvas.width) {
-        paddleX += 7;
-    } else if (game.leftKeyPressed && paddleX - 7 >= 0) {
-        paddleX -= 7;
-    }
-}
-
-function paddleCollisionDetection() {
-    if (ballY + ballRadius >= paddleY && ballX + ballRadius >= paddleX &&
-            ballX - ballRadius <= paddleX + paddleWidth && Math.sign(ballSpeedY) !== -1) {
-        ballSpeedY = -ballSpeedY;
-    }
-}
-
 function scoreRender() {
     if (game.scoreElement === null) {
         console.error("scoreElement is null");
@@ -109,24 +86,25 @@ function scoreRender() {
     game.scoreElement!.innerHTML = game.score.toString();
 
     if (game.score === brickRowCount * brickColumnCount) {
-        gameWon();
+        isGameRunning = false;
+        toggleScreen(game.winScreen, true);
     }
 }
 
 function update() {
     paddle.move(game.leftKeyPressed, game.rightKeyPressed, game.canvas.width);
     EntitiesUpdate(ball.entities.x, ball.entities.y, ball.entities.speedX, ball.entities.speedY);
-    paddle.collisionDetection(ball);
     if (ball.bounceToWalls(game.canvas.width, game.canvas.height)) {
-        gameOver();
+        isGameRunning = false;
+        toggleScreen(game.stopScreen, true);
     }
+    paddle.collisionDetection(ball);
     game.score = bricks.collisionDetection(ball, game.score);
 }
 
 function draw() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
-    // paddleRender();
     EntitiesRender([ball.entities, paddle.entities, bricks.entities], game.ctx, ["#f38ba8", "#f9e2af", "#a6e3a1"]);
     scoreRender();
 }
@@ -173,15 +151,6 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
     element!.style.display = display;
 }
 
-function gameOver() {
-    isGameRunning = false;
-    toggleScreen(game.stopScreen, true);
-}
-
-function gameWon() {
-    isGameRunning = false;
-    toggleScreen(game.winScreen, true);
-}
 
 function init() {
     ballSpeedX = 5;
