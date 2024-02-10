@@ -16,7 +16,11 @@ export interface Entities {
     y: Float64Array;
     speedX: Float64Array;
     speedY: Float64Array;
+    // width stores the width of a rectangle, or a radius if the entShape
+    // is circle.
     width: number;
+    // height stores the height of a rectangle, or 0 if the entShape
+    // is circle.
     height: number;
     status: boolean[];
     entShape: EntShape;
