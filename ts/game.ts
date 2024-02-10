@@ -18,6 +18,10 @@ class Game {
     readonly fps = 60.0;
     readonly frameTime = 1000.0 / this.fps;
 
+    previousTime = 0.0;
+    currentTime = 0.0;
+    deltaTime = 0.0;
+
     score = 0;
 
     rightKeyPressed = false;
@@ -94,20 +98,16 @@ function draw() {
     scoreRender();
 }
 
-let previousTime: number = 0.0;
-let currentTime = 0.0;
-let deltaTime = 0.0;
-
 function gameLoop(timeStamp: number) {
     if (isGameRunning === true) {
-        currentTime = timeStamp;
-        if(previousTime === 0) {
-            previousTime = currentTime;
+        game.currentTime = timeStamp;
+        if(game.previousTime === 0) {
+            game.previousTime = game.currentTime;
         }
-        deltaTime = currentTime - previousTime;
+        game.deltaTime = game.currentTime - game.previousTime;
 
-        if(deltaTime >= game.frameTime) {
-            previousTime = currentTime - (deltaTime % game.frameTime);
+        if(game.deltaTime >= game.frameTime) {
+            game.previousTime = game.currentTime - (game.deltaTime % game.frameTime);
             update();
         }
         draw();
