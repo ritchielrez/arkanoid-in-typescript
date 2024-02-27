@@ -152,7 +152,16 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
     element!.style.display = display;
 }
 
-function init() {
+function start() {
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    const startScreen = document.getElementById("start-screen");
+    const winScreen = document.getElementById("win-screen");
+    const stopScreen = document.getElementById("stop-screen");
+    const scoreElement = document.getElementById("score") as HTMLSpanElement;
+
+    game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
+
+    // if (firstRun === true) {
     const ballRadius = 10;
 
     const paddleWidth = 75;
@@ -178,34 +187,14 @@ function init() {
     paddle = new Paddle(paddleX, paddleY, 7, 0, paddleWidth, paddleHeight)
     bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
 
+    game.score = 0;
+    isGameRunning = true;
+
+    toggleScreen(game.winScreen, false);
+    toggleScreen(game.stopScreen, false);
     toggleScreen(game.startScreen, false);
 
     window.requestAnimationFrame(gameLoop);
-}
-
-function reinit() {
-    game.score = 0;
-    isGameRunning = true;
-    toggleScreen(game.winScreen, false);
-    toggleScreen(game.stopScreen, false);
-    init();
-}
-
-function start() {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const startScreen = document.getElementById("start-screen");
-    const winScreen = document.getElementById("win-screen");
-    const stopScreen = document.getElementById("stop-screen");
-    const scoreElement = document.getElementById("score") as HTMLSpanElement;
-
-    game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
-
-    if (firstRun === true) {
-        init();
-        firstRun = false;
-        return;
-    }
-    reinit();
 }
 
 document.addEventListener("keydown", keydDownHandler, false);
