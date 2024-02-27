@@ -152,7 +152,6 @@ function toggleScreen(element: HTMLElement | null, toggle: boolean) {
     element!.style.display = display;
 }
 
-
 function init() {
     const ballRadius = 10;
 
