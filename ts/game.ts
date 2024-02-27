@@ -3,8 +3,7 @@ import { Ball } from "./ball.js"
 import { Paddle } from "./paddle.js"
 import { Bricks } from "./brick.js"
 
-let firstRun = true;
-let isGameRunning = true;
+let isGameRunning = false;
 
 class Game {
     // Readonly forces these fields to be only initialized from the constructor
@@ -161,7 +160,6 @@ function start() {
 
     game = new Game(canvas, startScreen, winScreen, stopScreen, scoreElement);
 
-    // if (firstRun === true) {
     const ballRadius = 10;
 
     const paddleWidth = 75;
@@ -207,31 +205,28 @@ if (startButton === null) {
 }
 startButton!.addEventListener("click", start);
 
-let restartButton1 = document.getElementById("restart-button-1");
-if (restartButton1 === null) {
-    console.error("Restart button 1 is null");
-    isGameRunning = false;
-}
-restartButton1!.addEventListener("click", start);
+let restartButtons = Array.from(document.getElementsByClassName("restart-button"));
+restartButtons.forEach((restartButton) => {
+    if (restartButton === null) {
+        console.error("One of the restart buttons is null");
+        isGameRunning = false;
+    }
+    restartButton!.addEventListener("click", start);
+})
 
-let restartButton2 = document.getElementById("restart-button-2");
-if (restartButton2 === null) {
-    console.error("Restart button 2 is null");
-    isGameRunning = false;
-}
-restartButton2!.addEventListener("click", start);
-
-let backToStartScreenButton1 = document.getElementById("back-to-start-screen-button-1");
-if (backToStartScreenButton1 === null) {
-    console.error("Back to start screen button 1 is null");
-    isGameRunning = false;
-}
-backToStartScreenButton1!.addEventListener("click", () => {
-    game.score = 0;
-    toggleScreen(game.stopScreen, false);
-    toggleScreen(game.winScreen, false);
-    toggleScreen(game.startScreen, true);
-});
+let backToStartScreenButtons = Array.from(document.getElementsByClassName("back-to-start-screen-button"));
+backToStartScreenButtons.forEach((backToStartScreenButton) => {
+    if (backToStartScreenButton === null) {
+        console.error("One of the back to start screen buttons is null");
+        isGameRunning = false;
+    }
+    backToStartScreenButton!.addEventListener("click", () => {
+        game.score = 0;
+        toggleScreen(game.stopScreen, false);
+        toggleScreen(game.winScreen, false);
+        toggleScreen(game.startScreen, true);
+    });
+})
 
 let backToStartScreenButton2 = document.getElementById("back-to-start-screen-button-2");
 if (backToStartScreenButton2 === null) {
