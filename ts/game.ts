@@ -227,15 +227,3 @@ backToStartScreenButtons.forEach((backToStartScreenButton) => {
         toggleScreen(game.startScreen, true);
     });
 })
-
-let backToStartScreenButton2 = document.getElementById("back-to-start-screen-button-2");
-if (backToStartScreenButton2 === null) {
-    console.error("Back to start screen button 2 is null");
-    isGameRunning = false;
-}
-backToStartScreenButton2!.addEventListener("click", () => {
-    game.score = 0;
-    toggleScreen(game.stopScreen, false);
-    toggleScreen(game.winScreen, false);
-    toggleScreen(game.startScreen, true);
-});
