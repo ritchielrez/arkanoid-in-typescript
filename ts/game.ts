@@ -14,13 +14,6 @@ class Game {
     readonly stopScreen: HTMLElement | null = null;
     readonly scoreElement: HTMLSpanElement | null = null;
 
-    readonly fps = 60.0;
-    readonly frameTime = 1000.0 / this.fps;
-
-    previousTime = 0.0;
-    currentTime = 0.0;
-    deltaTime = 0.0;
-
     score = 0;
 
     rightKeyPressed = false;
@@ -101,17 +94,7 @@ function draw() {
 
 function gameLoop(timeStamp: number) {
     if (isGameRunning === true) {
-        game.currentTime = timeStamp;
-        if(game.previousTime === 0) {
-            game.previousTime = game.currentTime;
-        }
-        game.deltaTime = game.currentTime - game.previousTime;
-
-        if(game.deltaTime >= game.frameTime) {
-            game.previousTime = game.currentTime - 
-                (game.deltaTime % game.frameTime);
-            update();
-        }
+        update();
         draw();
 
         window.requestAnimationFrame(gameLoop);
