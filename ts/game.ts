@@ -21,6 +21,7 @@ class Game {
 
     fps = 60.0;
     frameTime = 1000 / this.fps;
+    movementStep = 1.0;
 
     previousTime = 0.0;
     currentTime = 0.0;
@@ -173,8 +174,8 @@ function start() {
     const brickOffsetTop = 75;
     const brickOffsetLeft = game.canvas.width / 8;
 
-    const ballSpeedX = 5;
-    const ballSpeedY = -5;
+    const ballSpeedX = 5 * game.movementStep;
+    const ballSpeedY = -5 * game.movementStep;
     const ballX = game.canvas.width / 2;
     const ballY = game.canvas.height - 30;
 
@@ -182,7 +183,7 @@ function start() {
     const paddleY = game.canvas.height - paddleHeight;
 
     ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
-    paddle = new Paddle(paddleX, paddleY, 7, 0, paddleWidth, paddleHeight)
+    paddle = new Paddle(paddleX, paddleY, 7 * game.movementStep, 0, paddleWidth, paddleHeight)
     bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
 
     game.score = 0;
