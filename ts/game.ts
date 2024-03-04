@@ -19,6 +19,13 @@ class Game {
     rightKeyPressed = false;
     leftKeyPressed = false;
 
+    fps = 60.0;
+    frameTime = 1000 / this.fps;
+
+    previousTime = 0.0;
+    currentTime = 0.0;
+    deltaTime = 0.0;
+
     constructor(canvas: HTMLCanvasElement | null, startScreen: HTMLElement | null,
                 winScreen: HTMLElement | null, stopScreen: HTMLElement | null,
                 scoreElement: HTMLSpanElement | null) {
@@ -74,8 +81,7 @@ function scoreRender() {
 
 function update() {
     paddle.move(game.leftKeyPressed, game.rightKeyPressed, game.canvas.width);
-    EntitiesUpdate(ball.entities.x, ball.entities.y, 
-                   ball.entities.speedX, ball.entities.speedY);
+    EntitiesUpdate(ball.entities.x, ball.entities.y, ball.entities.speedX, ball.entities.speedY);
     if (ball.bounceToWalls(game.canvas.width, game.canvas.height)) {
         isGameRunning = false;
         toggleScreen(game.stopScreen, true);
@@ -87,14 +93,22 @@ function update() {
 function draw() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
-    EntitiesRender([ball.entities, paddle.entities, bricks.entities], game.ctx, 
-                   ["#f38ba8", "#f9e2af", "#a6e3a1"]);
+    EntitiesRender([ball.entities, paddle.entities, bricks.entities], game.ctx, ["#f38ba8", "#f9e2af", "#a6e3a1"]);
     scoreRender();
 }
 
 function gameLoop(timeStamp: number) {
     if (isGameRunning === true) {
-        update();
+        game.currentTime = timeStamp;
+        if(game.previousTime === 0) {
+            game.previousTime = game.currentTime;
+        }
+        game.deltaTime = game.currentTime - game.previousTime;
+
+        if(game.deltaTime >= game.frameTime) {
+            game.previousTime = game.currentTime - (game.deltaTime % game.frameTime);
+            update();
+        }
         draw();
 
         window.requestAnimationFrame(gameLoop);
@@ -169,8 +183,7 @@ function start() {
 
     ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
     paddle = new Paddle(paddleX, paddleY, 7, 0, paddleWidth, paddleHeight)
-    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, 
-                        brickColumnCount, brickOffsetTop, brickOffsetLeft);
+    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
 
     game.score = 0;
     isGameRunning = true;
@@ -192,9 +205,7 @@ if (startButton === null) {
 }
 startButton!.addEventListener("click", start);
 
-let restartButtons = Array.from(
-    document.getElementsByClassName("restart-button")
-);
+let restartButtons = Array.from(document.getElementsByClassName("restart-button"));
 restartButtons.forEach((restartButton) => {
     if (restartButton === null) {
         console.error("One of the restart buttons is null");
@@ -203,9 +214,7 @@ restartButtons.forEach((restartButton) => {
     restartButton!.addEventListener("click", start);
 })
 
-let backToStartScreenButtons = Array.from(
-    document.getElementsByClassName("back-to-start-screen-button")
-);
+let backToStartScreenButtons = Array.from(document.getElementsByClassName("back-to-start-screen-button"));
 backToStartScreenButtons.forEach((backToStartScreenButton) => {
     if (backToStartScreenButton === null) {
         console.error("One of the back to start screen buttons is null");
