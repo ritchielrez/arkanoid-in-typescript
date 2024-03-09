@@ -10,7 +10,9 @@ export class Bricks {
     readonly offsetTop: number;
     readonly offsetLeft: number;
 
-    constructor(width: number, height: number, padding: number, rowCount: number, columnCount: number, offsetTop: number, offsetLeft: number) {
+    constructor(width: number, height: number, padding: number, 
+                rowCount: number, columnCount: number, 
+                offsetTop: number, offsetLeft: number) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.padding = padding;
@@ -42,7 +44,8 @@ export class Bricks {
         for (let c = 0; c < this.columnCount; ++c) {
             for (let r = 0; r < this.rowCount; ++r) {
                 const idx = this.rowCount * c + r;
-                if (this.entities.status[idx] === true && ball.entities.y[0] - ball.entities.width <= 
+                if (this.entities.status[idx] === true && 
+                        ball.entities.y[0] - ball.entities.width <= 
                         this.entities.y[idx] + this.entities.height &&
                         ball.entities.y[0] + ball.entities.width >= this.entities.y[idx] && 
                         ball.entities.x[0] + ball.entities.width >= this.entities.x[idx] &&

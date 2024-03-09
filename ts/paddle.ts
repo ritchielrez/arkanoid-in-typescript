@@ -27,8 +27,10 @@ export class Paddle {
     }
 
     collisionDetection(ball: Ball) {
-        if (ball.entities.y[0] + ball.entities.width >= this.entities.y[0] && ball.entities.x[0] + ball.entities.width >= this.entities.x[0] &&
-                ball.entities.x[0] - ball.entities.width <= this.entities.x[0] + this.entities.width && Math.sign(ball.entities.speedY[0]) !== -1) {
+        if (ball.entities.y[0] + ball.entities.width >= this.entities.y[0] 
+                && ball.entities.x[0] + ball.entities.width >= this.entities.x[0] &&
+                ball.entities.x[0] - ball.entities.width <= this.entities.x[0] + this.entities.width && 
+                Math.sign(ball.entities.speedY[0]) !== -1) {
             ball.entities.speedY[0] = -(ball.entities.speedY[0]);
         }
     }

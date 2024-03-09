@@ -27,8 +27,10 @@ class Game {
     currentTime = 0.0;
     deltaTime = 0.0;
 
-    constructor(canvas: HTMLCanvasElement | null, startScreen: HTMLElement | null,
-                winScreen: HTMLElement | null, stopScreen: HTMLElement | null,
+    constructor(canvas: HTMLCanvasElement | null, 
+                startScreen: HTMLElement | null,
+                winScreen: HTMLElement | null, 
+                stopScreen: HTMLElement | null,
                 scoreElement: HTMLSpanElement | null) {
         if (canvas === null) {
             console.error("Canvas is null");
@@ -183,8 +185,10 @@ function start() {
     const paddleY = game.canvas.height - paddleHeight;
 
     ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
-    paddle = new Paddle(paddleX, paddleY, 7 * game.movementStep, 0, paddleWidth, paddleHeight)
-    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, brickColumnCount, brickOffsetTop, brickOffsetLeft);
+    paddle = new Paddle(paddleX, paddleY, 7 * game.movementStep, 0, 
+                        paddleWidth, paddleHeight)
+    bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, 
+                        brickColumnCount, brickOffsetTop, brickOffsetLeft);
 
     game.score = 0;
     isGameRunning = true;
@@ -206,7 +210,9 @@ if (startButton === null) {
 }
 startButton!.addEventListener("click", start);
 
-let restartButtons = Array.from(document.getElementsByClassName("restart-button"));
+let restartButtons = Array.from(
+    document.getElementsByClassName("restart-button"));
+
 restartButtons.forEach((restartButton) => {
     if (restartButton === null) {
         console.error("One of the restart buttons is null");
@@ -215,7 +221,9 @@ restartButtons.forEach((restartButton) => {
     restartButton!.addEventListener("click", start);
 })
 
-let backToStartScreenButtons = Array.from(document.getElementsByClassName("back-to-start-screen-button"));
+let backToStartScreenButtons = Array.from(
+    document.getElementsByClassName("back-to-start-screen-button"));
+
 backToStartScreenButtons.forEach((backToStartScreenButton) => {
     if (backToStartScreenButton === null) {
         console.error("One of the back to start screen buttons is null");
