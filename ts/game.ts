@@ -185,7 +185,7 @@ function start() {
     const paddleY = game.canvas.height - paddleHeight;
 
     ball = new Ball(ballX, ballY, ballSpeedX, ballSpeedY, ballRadius);
-    paddle = new Paddle(paddleX, paddleY, 7 * game.movementStep, 0, 
+    paddle = new Paddle(paddleX, paddleY, 10 * game.movementStep, 0, 
                         paddleWidth, paddleHeight)
     bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, 
                         brickColumnCount, brickOffsetTop, brickOffsetLeft);
