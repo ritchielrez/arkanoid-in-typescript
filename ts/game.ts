@@ -170,9 +170,9 @@ function start() {
     const paddleWidth = 75;
     const paddleHeight = 10;
 
-    const brickRowCount = 5;
+    const brickRowCount = 6;
     const brickColumnCount = 5;
-    const brickWidth = 100;
+    const brickWidth = 96;
     const brickHeight = 20;
     const brickPadding = 30;
 
