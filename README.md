@@ -1,10 +1,9 @@
-# breakout-game-typescript
-### A 2D breakout game made using HTML5 canvas and Typescript 
-#### The code is a lot messy and I have decided to not work on it anymore. Anyone is welcomed to suggest any improvements.
+# arkanoid
+### A 2D arkanoid game made using HTML5 canvas and Typescript 
 
 This is an expermental project for me trying to learn how HTML5 canvas and Typescript works. I
 know Typescript is not used for game development, but I just wanted to learn by doing something that
-I enjoy more than building websites. Go to https://ritchielrez.github.io/breakout-game-typescript/ to
+I enjoy more than building websites. Go to https://ritchielrez.github.io/arkanoid/ to
 try this game out.
 
 Here are the instructions for you if you want to build it from source:
