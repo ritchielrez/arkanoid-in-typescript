@@ -96,7 +96,9 @@ function update() {
 function draw() {
     game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height)
 
-    EntitiesRender([ball.entities, paddle.entities, bricks.entities], game.ctx, ["#f38ba8", "#f9e2af", "#a6e3a1"]);
+    EntitiesRender(ball.entities, game.ctx, "#f38ba8");
+    EntitiesRender(paddle.entities, game.ctx, "#f9e2af");
+    EntitiesRender(bricks.entities, game.ctx, "#a6e3a1");
     scoreRender();
 }
 

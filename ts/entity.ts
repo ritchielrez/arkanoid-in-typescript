@@ -26,30 +26,28 @@ export interface Entities {
     entShape: EntShape;
 }
 
-export function EntitiesRender(entities: Entities[], ctx: CanvasRenderingContext2D, fillStyle: string[]) {
-    entities.forEach((entity, idx) => {
-        ctx.fillStyle = fillStyle[idx];
-        switch(entity.entShape) {
-            case(EntShape.Circle):
-                entity.x.forEach((_, idx) => {
-                    if(entity.status[idx] === true) {
-                        ctx.beginPath();
-                        ctx.arc(entity.x[idx], entity.y[idx], entity.width, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                });
-            break;
-            case(EntShape.Rectangle):
-                entity.x.forEach((_, idx) => {
-                    if(entity.status[idx] === true) {
-                        ctx.beginPath();
-                        ctx.rect(entity.x[idx], entity.y[idx], entity.width, entity.height);
-                        ctx.fill();
-                    }
-                });
-            break;
-        }
-    });
+export function EntitiesRender(entities: Entities, ctx: CanvasRenderingContext2D, fillStyle: string) {
+    ctx.fillStyle = fillStyle;
+    switch(entities.entShape) {
+        case(EntShape.Circle):
+            entities.x.forEach((_, idx) => {
+                if(entities.status[idx] === true) {
+                    ctx.beginPath();
+                    ctx.arc(entities.x[idx], entities.y[idx], entities.width, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        break;
+        case(EntShape.Rectangle):
+            entities.x.forEach((_, idx) => {
+                if(entities.status[idx] === true) {
+                    ctx.beginPath();
+                    ctx.rect(entities.x[idx], entities.y[idx], entities.width, entities.height);
+                    ctx.fill();
+                }
+            });
+        break;
+    }
 }
 
 export function EntitiesUpdate(x: Float64Array, y: Float64Array, speedX: Float64Array, speedY: Float64Array) {
