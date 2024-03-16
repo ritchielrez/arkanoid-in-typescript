@@ -173,8 +173,6 @@ function start() {
     const brickWidth = 100;
     const brickHeight = 20;
     const brickPadding = 30;
-    const brickOffsetTop = 75;
-    const brickOffsetLeft = game.canvas.width / 8;
 
     const ballSpeedX = 5 * game.movementStep;
     const ballSpeedY = -5 * game.movementStep;
@@ -188,7 +186,7 @@ function start() {
     paddle = new Paddle(paddleX, paddleY, 10 * game.movementStep, 0, 
                         paddleWidth, paddleHeight)
     bricks = new Bricks(brickWidth, brickHeight, brickPadding, brickRowCount, 
-                        brickColumnCount, brickOffsetTop, brickOffsetLeft);
+                        brickColumnCount);
 
     game.score = 0;
     isGameRunning = true;
