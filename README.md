@@ -1,6 +1,6 @@
 # breakout-game-typescript
 ### A 2D breakout game made using HTML5 canvas and Typescript 
-### WARNING: For the stable version, switch to `main` branch
+#### The code is a lot messy and I have decided to not work on it anymore. Anyone is welcomed to suggest any improvements.
 
 This is an expermental project for me trying to learn how HTML5 canvas and Typescript works. I
 know Typescript is not used for game development, but I just wanted to learn by doing something that
